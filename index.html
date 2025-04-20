@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Ticket Booking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Oswald', sans-serif;
+        }
+        .navbar {
+            background: linear-gradient(90deg, #ff3b3b, #ff9900);
+        }
+        .carousel-item img {
+            height: auto;
+            width: 100%;
+            max-width: 800px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 0 auto;
+        }
+        .card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: #1e1e1e;
+            color: white;
+            border: none;
+            box-shadow: 0 4px 8px rgba(255, 153, 0, 0.3);
+            transition: transform 0.3s;
+        }
+
+
+        .card-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #ff3b3b, #ff9900);
+            border: none;
+            padding: 10px;
+            font-weight: bold;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #d12a2a, #e68a00);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Movie Booking</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="booking.html">Book Tickets</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div id="movieCarousel" class="carousel slide mt-3" data-bs-ride="carousel" data-bs-interval="2000">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="img4.avif" class="d-block w-100"  id="movie1" alt="Dragon">
+            </div>
+            <div class="carousel-item">
+                <img src="img5.jpg" class="d-block w-100" id="movie2" alt="Interstellar">
+            </div>
+            <div class="carousel-item">
+                <img src="img6.avif" class="d-block w-100" id="movie3" alt="Nilavuku%20Enmel%20Ennadi%20Kobam">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#movieCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#movieCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+    
+    <div class="container mt-4">
+        <h2 class="text-center">Now Showing</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="img2.avif" class="card-img-top" alt="Movie 1">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Dragon</h5>
+                        <p class="card-text">Ragavan, infamous for his reckless ways and academic struggles, turns to fraud after a heartbreaking breakup, chasing wealth and power. However, his deceit leads him into perilous territory. Can he find a way out, or will his choices seal his fate?</p>
+                        <a href="booking.html?movie=Dragon" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="img1.avif" class="card-img-top" alt="Movie 2">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Interstellar</h5>
+                        <p class="card-text">A team of explorers travel beyond this galaxy through a newly discovered wormhole to discover whether mankind has a future among the stars.</p>
+                        <a href="booking.html?movie=Interstellar" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="img3.avif" class="card-img-top" alt="Movie 3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Nilavuku Enmel Ennadi Kobam</h5>
+                        <p class="card-text">All set to move on with his life, a boy unexpectedly reconnects with his past love. </p>
+                        <a href="booking.html?movie=Nilavuku%20Enmel%20Ennadi%20Kobam" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="text-center mt-4 py-3" style="background-color: #1e1e1e; color: #ffffff;">
+        <p>&copy; 2025 Movie Booking Portal. All rights reserved.</p>
+    </footer>
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
