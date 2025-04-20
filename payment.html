@@ -285,7 +285,248 @@
             const errorElements = document.querySelectorAll('.error-message');
             errorElements.forEach(function (element) {
                 element.innerText = '';
-            });
+            });Here’s the complete, updated **payment.html** page—now configured to work seamlessly under your GitHub Pages repo at `https://ashvath-411.github.io/Movie-Booking/`. It includes:
+
+- A `<base>` tag so all links (CSS, JS, redirects) resolve under `/Movie-Booking/`
+- Realistic 3‑second loading spinner before redirect
+- Client‑side validation for card, UPI, and net‑banking fields
+- JavaScript redirect to `payment_success.html` after payment
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Payment – Movie Booking Portal</title>
+
+  <!-- Ensure all relative URLs resolve under /Movie-Booking/ -->
+  <base href="/Movie-Booking/">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #121212;
+      color: #fff;
+      font-family: sans-serif;
+    }
+    .navbar {
+      background: linear-gradient(90deg,#ff3b3b,#ff9900);
+    }
+    .card {
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      box-shadow: 0 4px 8px rgba(255,153,0,0.3);
+    }
+    .form-control, .form-select {
+      background-color: #333;
+      color: #fff;
+      border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(90deg,#ff3b3b,#ff9900);
+      border: none;
+      padding: .75rem;
+      font-weight: bold;
+    }
+    .payment-header {
+      font-size: 1.75rem;
+      font-weight: bold;
+    }
+    .total-price {
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+    .error-message {
+      color: #f66;
+      font-size: .875rem;
+      margin-top: .25rem;
+    }
+    /* Spinner overlay */
+    .spinner-container {
+      display: none;
+      position: fixed; top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.6);
+      z-index: 1050;
+      justify-content: center;
+      align-items: center;
+    }
+    .spinner {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #ff9900;
+      border-radius: 50%;
+      width: 50px; height: 50px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Movie Booking</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="booking.html">Book Tickets</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Payment Card -->
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <div class="card p-4">
+          <h3 class="payment-header mb-3">Payment Information</h3>
+
+          <!-- Booking Summary -->
+          <div class="mb-3">
+            <p><strong>Movie:</strong> <span id="selectedMovie">Nilavuku Enmel Ennadi Kobam</span></p>
+            <p><strong>Seats:</strong> <span id="selectedSeats">3</span> Tickets</p>
+            <p><strong>Theatre:</strong> Luxe IMAX</p>
+            <p class="total-price">Total: ₹<span id="totalPrice">900</span></p>
+          </div>
+
+          <!-- Form -->
+          <form id="paymentForm" novalidate>
+            <div class="mb-3">
+              <label class="form-label" for="paymentMethod">Payment Method</label>
+              <select id="paymentMethod" class="form-select" required>
+                <option value="" disabled selected>Select method</option>
+                <option>Credit/Debit Card</option>
+                <option>UPI</option>
+                <option>Net Banking</option>
+              </select>
+              <div id="paymentMethodError" class="error-message"></div>
+            </div>
+
+            <!-- Card Fields -->
+            <div id="cardInfo" style="display:none;">
+              <div class="mb-3">
+                <label class="form-label" for="cardNumber">Card Number</label>
+                <input type="text" id="cardNumber" class="form-control" placeholder="16‑digit card #" required>
+                <div id="cardNumberError" class="error-message"></div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="expiryDate">Expiry Date</label>
+                <input type="month" id="expiryDate" class="form-control" required>
+                <div id="expiryDateError" class="error-message"></div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="cvv">CVV</label>
+                <input type="text" id="cvv" class="form-control" maxlength="3" placeholder="123" required>
+                <div id="cvvError" class="error-message"></div>
+              </div>
+            </div>
+
+            <!-- UPI Fields -->
+            <div id="upiInfo" style="display:none;">
+              <div class="mb-3">
+                <label class="form-label" for="upiId">UPI ID</label>
+                <input type="text" id="upiId" class="form-control" placeholder="user@upi" required>
+                <div id="upiIdError" class="error-message"></div>
+              </div>
+            </div>
+
+            <!-- Net Banking Fields -->
+            <div id="netBankingInfo" style="display:none;">
+              <div class="mb-3">
+                <label class="form-label" for="bankName">Bank Name</label>
+                <input type="text" id="bankName" class="form-control" placeholder="Your Bank" required>
+                <div id="bankNameError" class="error-message"></div>
+              </div>
+            </div>
+
+            <button type="button" id="submitPaymentBtn" class="btn btn-primary w-100">
+              Submit Payment
+            </button>
+          </form>
+
+          <!-- Accepted Methods -->
+          <div class="text-center mt-4">
+            <h6>Accepted Payment Methods</h6>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/49/Visa_Logo_2011.png" alt="Visa">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Mastercard-Logo.png" alt="Mastercard">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/UPI_logo.png" alt="UPI">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div class="spinner-container d-flex" id="loadingSpinner">
+    <div class="spinner"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+  <script>
+    const paymentMethodSelect = document.getElementById('paymentMethod');
+    const cardInfo = document.getElementById('cardInfo');
+    const upiInfo = document.getElementById('upiInfo');
+    const netBankingInfo = document.getElementById('netBankingInfo');
+    const submitBtn = document.getElementById('submitPaymentBtn');
+    const spinner = document.getElementById('loadingSpinner');
+
+    // Show relevant fields
+    paymentMethodSelect.addEventListener('change', () => {
+      cardInfo.style.display = paymentMethodSelect.value === 'Credit/Debit Card' ? 'block' : 'none';
+      upiInfo.style.display = paymentMethodSelect.value === 'UPI' ? 'block' : 'none';
+      netBankingInfo.style.display = paymentMethodSelect.value === 'Net Banking' ? 'block' : 'none';
+    });
+
+    // Validation helpers
+    const showError = (id, msg) => document.getElementById(id).innerText = msg;
+    const clearErrors = () => document.querySelectorAll('.error-message').forEach(el => el.innerText = '');
+    const isFuture = d => new Date(d) >= new Date();
+    
+    submitBtn.addEventListener('click', () => {
+      clearErrors();
+      let valid = true;
+      const method = paymentMethodSelect.value;
+
+      if (!method) {
+        showError('paymentMethodError','Please select a payment method.');
+        valid = false;
+      }
+      if (method === 'Credit/Debit Card') {
+        const num = document.getElementById('cardNumber').value.trim();
+        const exp = document.getElementById('expiryDate').value;
+        const cvv = document.getElementById('cvv').value.trim();
+        if (!/^\d{16}$/.test(num)) { showError('cardNumberError','Enter 16 digits.'); valid = false; }
+        if (!exp || !isFuture(exp+'-01')) { showError('expiryDateError','Invalid expiry date.'); valid = false; }
+        if (!/^\d{3}$/.test(cvv)) { showError('cvvError','Enter 3 digit CVV.'); valid = false; }
+      }
+      if (method === 'UPI') {
+        const upi = document.getElementById('upiId').value.trim();
+        if (!/^[\w.\-]+@upi$/.test(upi)) { showError('upiIdError','UPI must end with @upi.'); valid = false; }
+      }
+      if (method === 'Net Banking') {
+        if (!document.getElementById('bankName').value.trim()) {
+          showError('bankNameError','Enter bank name.'); valid = false;
+        }
+      }
+
+      if (!valid) return;
+
+      // Simulate processing
+      spinner.style.display = 'flex';
+      setTimeout(() => {
+        window.location.href = 'payment_success.html';
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
+```
         }
     </script>
 </body>
