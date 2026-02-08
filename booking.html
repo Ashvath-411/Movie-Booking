@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Booking Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        /* Dark mode (default) */
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .navbar {
+            background: linear-gradient(90deg, #ff3b3b, #ff9900);
+            transition: background 0.3s;
+        }
+        .card {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            color: #ffffff;
+            box-shadow: 0 4px 8px rgba(255, 153, 0, 0.3);
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #ff3b3b, #ff9900);
+            border: none;
+            padding: 10px;
+            font-weight: bold;
+        }
+        .movie-card .card-body {
+            padding: 20px;
+        }
+        .movie-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .movie-price {
+            font-size: 1.2rem;
+            color: #ff9900;
+            font-weight: bold;
+        }
+        .carousel-item {
+            transition: transform 0.6s ease-in-out;
+        }
+        .carousel-control-prev, .carousel-control-next {
+            color: #ff9900;
+        }
+        .form-select, .form-control {
+            background-color: #333;
+            color: #fff;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+        .card-title, .card-text {
+            margin-bottom: 10px;
+        }
+        .theme-toggle {
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 1.2rem;
+            margin-left: 15px;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Light mode styles */
+        body.light-mode {
+            background-color: #f0f0f0;
+            color: #333333;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            color: #333333;
+            border-color: #dddddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        body.light-mode .form-select, 
+        body.light-mode .form-control {
+            background-color: #ffffff;
+            color: #333333;
+            border-color: #cccccc;
+        }
+        body.light-mode .movie-price {
+            color: #ff6600;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Movie Booking</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="booking.html">Book Tickets</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item">
+                        <div class="theme-toggle" id="themeToggle">
+                            <i class="bi bi-moon-fill"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div id="movieCarousel" class="carousel slide mb-4" data-bs-ride="carousel" data-bs-interval="false">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="movie-card card" id="movie1">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="img3.avif" class="img-fluid rounded-start" alt="Movie 1">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h2 class="card-title">Nilavuku Enmel Ennadi Kobam</h2>
+                                    <p class="card-text"><strong>Parental Rating:</strong> UA13+</p>
+                                    <p class="card-text"><strong>IMDb Rating:</strong> 7.8/10</p>
+                                    <p class="card-text"><strong>Run Time:</strong> 2h 11m</p>
+                                    <p class="card-text"><strong>Genre:</strong> Comedy, Romantic</p>
+                                    <p class="card-text"><strong>Tickets Remaining:</strong> <span id="movie1TicketsRemaining">40</span></p>
+                                    <p class="movie-price">₹ 400</p> <!-- Movie Price -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="movie-card card" id="movie2">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="img2.avif" class="img-fluid rounded-start" alt="Movie 2">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h2 class="card-title">Dragon</h2>
+                                    <p class="card-text"><strong>Parental Rating:</strong> UA16+</p>
+                                    <p class="card-text"><strong>IMDb Rating:</strong> 9.3/10</p>
+                                    <p class="card-text"><strong>Run Time:</strong> 2h 35m</p>
+                                    <p class="card-text"><strong>Genre:</strong> Comedy, Drama, Thriller</p>
+                                    <p class="card-text"><strong>Tickets Remaining:</strong> <span id="movie2TicketsRemaining">20</span></p>
+                                    <p class="movie-price">₹ 450</p> <!-- Movie Price -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="movie-card card" id="movie3">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="img1.avif" class="img-fluid rounded-start" alt="Movie 3">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h2 class="card-title">Interstellar</h2>
+                                    <p class="card-text"><strong>Parental Rating:</strong> 13+</p>
+                                    <p class="card-text"><strong>IMDb Rating:</strong> 9.6/10</p>
+                                    <p class="card-text"><strong>Run Time:</strong> 2h 49m</p>
+                                    <p class="card-text"><strong>Genre:</strong> Action, Adventure, Sci-Fi</p>
+                                    <p class="card-text"><strong>Tickets Remaining:</strong> <span id="movie3TicketsRemaining">18</span></p>
+                                    <p class="movie-price">₹ 350</p> <!-- Movie Price -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#movieCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#movieCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <div class="card p-4">
+            <h4 class="mb-3">Book Your Tickets</h4>
+            <form id="bookingForm" action="payment.html" method="GET">
+                <div class="mb-3">
+                    <label class="form-label">Movie Name</label>
+                    <select class="form-select" name="movie" id="movieSelect" required>
+                        <option value="" disabled selected>Select a movie</option>
+                        <option value="Nilavuku Enmel Ennadi Kobam">Nilavuku Enmel Ennadi Kobam</option>
+                        <option value="Dragon">Dragon</option>
+                        <option value="Interstellar">Interstellar</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Theatre</label>
+                    <select class="form-select" name="theatre" required>
+                        <option value="" disabled selected>Select a theatre</option>
+                        <option value="Luxe IMAX">Luxe IMAX</option>
+                        <option value="PVR Cinemas">PVR Cinemas</option>
+                        <option value="Cinepolis">Cinepolis</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Language</label>
+                    <select class="form-select" name="language" required>
+                        <option value="" disabled selected>Select a language</option>
+                        <option value="English">English</option>
+                        <option value="Hindi">Hindi</option>
+                        <option value="Tamil">Tamil</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Number of Tickets</label>
+                    <input type="number" class="form-control" name="tickets" id="ticketInput" min="1" max="25" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Date</label>
+                    <input type="date" class="form-control" name="date" id="dateInput" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Proceed to Payment</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                themeIcon.classList.remove('bi-moon-fill');
+                themeIcon.classList.add('bi-sun-fill');
+            }
+            
+            // Toggle theme when button is clicked
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('light-mode');
+                
+                // Update the icon
+                if (document.body.classList.contains('light-mode')) {
+                    themeIcon.classList.remove('bi-moon-fill');
+                    themeIcon.classList.add('bi-sun-fill');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    themeIcon.classList.remove('bi-sun-fill');
+                    themeIcon.classList.add('bi-moon-fill');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+
+            // Booking page functionality
+            const params = new URLSearchParams(window.location.search);
+            const movie = params.get('movie');
+
+            const movieIndexMap = {
+                'Nilavuku Enmel Ennadi Kobam': 0,
+                'Dragon': 1,
+                'Interstellar': 2
+            };
+
+            const carouselElement = document.querySelector('#movieCarousel');
+            const carousel = new bootstrap.Carousel(carouselElement, {
+                interval: false,
+                ride: false
+            });
+
+            if (movie && movieIndexMap[movie] !== undefined) {
+                carousel.to(movieIndexMap[movie]);
+                document.querySelector('.carousel-control-prev').style.display = 'none';
+                document.querySelector('.carousel-control-next').style.display = 'none';
+            }
+
+            // Set today's date as min
+            const dateInput = document.getElementById('dateInput');
+            const today = new Date();
+            const todayString = today.toISOString().split('T')[0];
+            dateInput.setAttribute('min', todayString);
+
+            // Preselect dropdown
+            const movieSelect = document.getElementById('movieSelect');
+            if (movie && movieSelect) {
+                const validOptions = Object.keys(movieIndexMap);
+                if (validOptions.includes(movie)) {
+                    movieSelect.value = movie;
+                }
+            }
+
+            // Booking form handling
+            const bookingForm = document.getElementById('bookingForm');
+            const ticketInput = document.getElementById('ticketInput');
+
+            bookingForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // Prevent default form submission
+                
+                const movieName = movieSelect.value;
+                const tickets = parseInt(ticketInput.value);
+                const theatre = document.querySelector('select[name="theatre"]').value;
+                const language = document.querySelector('select[name="language"]').value;
+                const date = document.getElementById('dateInput').value;
+
+                let ticketsRemainingElement = null;
+                let moviePrice = 0;
+                
+                if (movieName === 'Nilavuku Enmel Ennadi Kobam') {
+                    ticketsRemainingElement = document.getElementById('movie1TicketsRemaining');
+                    moviePrice = 400;
+                } else if (movieName === 'Dragon') {
+                    ticketsRemainingElement = document.getElementById('movie2TicketsRemaining');
+                    moviePrice = 450;
+                } else if (movieName === 'Interstellar') {
+                    ticketsRemainingElement = document.getElementById('movie3TicketsRemaining');
+                    moviePrice = 350;
+                }
+
+                if (ticketsRemainingElement) {
+                    const current = parseInt(ticketsRemainingElement.textContent);
+                    if (tickets > current) {
+                        alert("Not enough tickets available!");
+                        return;
+                    }
+                    
+                    // Store booking data in sessionStorage
+                    sessionStorage.setItem("movieName", movieName);
+                    sessionStorage.setItem("ticketCount", tickets);
+                    sessionStorage.setItem("theatreName", theatre);
+                    sessionStorage.setItem("language", language);
+                    sessionStorage.setItem("bookingDate", date);
+                    sessionStorage.setItem("totalPrice", moviePrice * tickets);
+                    
+                    // Redirect to payment page with query parameters
+                    window.location.href = `payment.html?movie=${encodeURIComponent(movieName)}&tickets=${tickets}&theatre=${encodeURIComponent(theatre)}&totalPrice=${moviePrice * tickets}`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

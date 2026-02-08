@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Ticket Booking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        /* Dark mode (default) */
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .navbar {
+            background: linear-gradient(90deg, #ff3b3b, #ff9900);
+            transition: background 0.3s;
+        }
+        .carousel-item img {
+            height: auto;
+            width: 100%;
+            max-width: 800px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 0 auto;
+        }
+        .card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: #1e1e1e;
+            color: white;
+            border: none;
+            box-shadow: 0 4px 8px rgba(255, 153, 0, 0.3);
+            transition: transform 0.3s, background-color 0.3s, color 0.3s;
+        }
+        .card-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #ff3b3b, #ff9900);
+            border: none;
+            padding: 10px;
+            font-weight: bold;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #d12a2a, #e68a00);
+        }
+        .theme-toggle {
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 1.2rem;
+            margin-left: 15px;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        footer {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Light mode */
+        body.light-mode {
+            background-color: #f0f0f0;
+            color: #333333;
+        }
+        body.light-mode .card {
+            background-color: #ffffff;
+            color: #333333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        body.light-mode footer {
+            background-color: #e0e0e0;
+            color: #333333;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Movie Booking</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="booking.html">Book Tickets</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item">
+                        <div class="theme-toggle" id="themeToggle">
+                            <i class="bi bi-moon-fill"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div id="movieCarousel" class="carousel slide mt-3" data-bs-ride="carousel" data-bs-interval="2000">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="img4.avif" class="d-block w-100"  id="movie1" alt="Dragon">
+            </div>
+            <div class="carousel-item">
+                <img src="img5.jpg" class="d-block w-100" id="movie2" alt="Interstellar">
+            </div>
+            <div class="carousel-item">
+                <img src="img6.avif" class="d-block w-100" id="movie3" alt="Nilavuku%20Enmel%20Ennadi%20Kobam">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#movieCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#movieCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+    
+    <div class="container mt-4">
+        <h2 class="text-center">Now Showing</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="img2.avif" class="card-img-top" alt="Movie 1">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Dragon</h5>
+                        <p class="card-text">Ragavan, infamous for his reckless ways and academic struggles, turns to fraud after a heartbreaking breakup, chasing wealth and power. However, his deceit leads him into perilous territory. Can he find a way out, or will his choices seal his fate?</p>
+                        <a href="booking.html?movie=Dragon" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="img1.avif" class="card-img-top" alt="Movie 2">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Interstellar</h5>
+                        <p class="card-text">A team of explorers travel beyond this galaxy through a newly discovered wormhole to discover whether mankind has a future among the stars.</p>
+                        <a href="booking.html?movie=Interstellar" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="img3.avif" class="card-img-top" alt="Movie 3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Nilavuku Enmel Ennadi Kobam</h5>
+                        <p class="card-text">All set to move on with his life, a boy unexpectedly reconnects with his past love. </p>
+                        <a href="booking.html?movie=Nilavuku%20Enmel%20Ennadi%20Kobam" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-4 py-3">
+        <p>&copy; 2025 Movie Booking Portal. All rights reserved.</p>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Theme toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                themeIcon.classList.remove('bi-moon-fill');
+                themeIcon.classList.add('bi-sun-fill');
+            }
+            
+            // Toggle theme when button is clicked
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('light-mode');
+                
+                // Update the icon
+                if (document.body.classList.contains('light-mode')) {
+                    themeIcon.classList.remove('bi-moon-fill');
+                    themeIcon.classList.add('bi-sun-fill');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    themeIcon.classList.remove('bi-sun-fill');
+                    themeIcon.classList.add('bi-moon-fill');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
